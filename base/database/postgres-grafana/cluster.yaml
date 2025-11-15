@@ -1,0 +1,45 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: grafana-postgres
+  namespace: database
+spec:
+  instances: 3
+
+  # Storage
+  storage:
+    size: 10Gi
+    storageClass: k8s
+
+  # Bootstrap
+  bootstrap:
+    initdb:
+      database: grafana
+      owner: grafana
+      secret:
+        name: grafana-postgres-app
+
+  # Resources
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  # Monitoring
+  monitoring:
+    enablePodMonitor: false
+
+  # Backup configuration (opcjonalne)
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: s3://backups/
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: backup-creds
+  #         key: ACCESS_KEY_ID
+  #       secretAccessKey:
+  #         name: backup-creds
+  #         key: ACCESS_SECRET_KEY

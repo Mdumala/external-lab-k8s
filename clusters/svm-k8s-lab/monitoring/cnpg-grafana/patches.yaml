@@ -1,0 +1,20 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: grafana-postgres
+  namespace: database
+spec:
+  # Cluster-specific config dla svm-k8s-lab
+  instances: 3
+
+  storage:
+    size: 20Gi
+    storageClass: k8s
+
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "200m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"

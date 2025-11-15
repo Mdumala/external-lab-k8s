@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: nginx
-  namespace: network            # repozytoria centralnie (polecane)
+  namespace: flux-system
 spec:
-  interval: 24h
+  interval: 1h
   url: https://kubernetes.github.io/ingress-nginx

@@ -1,0 +1,34 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+
+# Secrets (nigdy nie commituj!)
+*.secret.yaml
+*-secret.yaml
+secrets/
+.env
+.env.local
+
+# SOPS encrypted files backup
+*.dec.yaml
+*.dec.yml
+
+# Terraform (jeśli używasz)
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Scripts output
+logs/
+*.log

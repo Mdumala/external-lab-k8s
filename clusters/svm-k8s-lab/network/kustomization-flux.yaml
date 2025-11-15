@@ -4,13 +4,13 @@ metadata:
   name: network
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 10m
   serviceAccountName: kustomize-controller
-  wait: true
-  prune: true
-  path: ./infrastructure/svm-k8s-lab/network
   sourceRef:
     kind: GitRepository
     name: flux-system
+  path: ./clusters/svm-k8s-lab/network
+  prune: true
+  wait: false
   dependsOn:
-    - name: bases
+    - name: namespaces

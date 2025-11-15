@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nginx-main
+  namespace: network
+spec:
+  values:
+    # Cluster-specific config dla svm-k8s-lab
+    controller:
+      service:
+        annotations:
+          io.cilium/lb-ipam-ips: "10.123.44.212"
+        type: LoadBalancer
+
+      # Dodatkowe ustawienia dla lab
+      replicaCount: 2
+
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi

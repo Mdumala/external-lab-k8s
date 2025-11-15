@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  values:
+    # Cluster-specific overrides dla svm-k8s-lab
+    persistence:
+      size: 20Gi  # Więcej miejsca dla lab
+      storageClassName: "local-path"  # Lub twój storage class
+
+    ingress:
+      enabled: true
+      ingressClassName: nginx-main
+      hosts:
+        - grafana.lab.local
+      # tls: []
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+
+    # PostgreSQL database configuration
+    # CNPG tworzy secret: grafana-postgres-app w namespace database
+    #
+    # WAŻNE: Secret musi być skopiowany do namespace monitoring:
+    # kubectl get secret grafana-postgres-app -n database -o yaml | \
+    #   sed 's/namespace: database/namespace: monitoring/' | \
+    #   kubectl apply -f -
+    #
+    # Lub użyj Reflector/External Secrets Operator do synchronizacji
+
+    # Grafana Helm chart database config
+    envValueFrom:
+      GF_DATABASE_PASSWORD:
+        secretKeyRef:
+          name: grafana-postgres-app
+          key: password
+
+    env:
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: grafana-postgres-rw.database.svc.cluster.local:5432
+      GF_DATABASE_NAME: grafana
+      GF_DATABASE_USER: grafana
+      GF_DATABASE_SSL_MODE: disable
