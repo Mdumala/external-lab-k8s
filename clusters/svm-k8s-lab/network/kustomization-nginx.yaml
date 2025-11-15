@@ -1,20 +1,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: alloy
-  namespace: monitoring
+  name: nginx
+  namespace: network
 spec:
   interval: 10m
   serviceAccountName: kustomize-controller
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./clusters/svm-k8s-lab/monitoring/alloy
+  path: ./clusters/svm-k8s-lab/network/nginx
   prune: true
   wait: false
   dependsOn:
     - name: namespaces
-  targetNamespace: monitoring
+  targetNamespace: network
   postBuild:
     substitute:
-      namespace_name: monitoring
+      namespace_name: network

@@ -5,7 +5,9 @@
       "Bash(test:*)",
       "Bash(kustomize build:*)",
       "Bash(kubectl kustomize:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(/dev/null)",
+      "Bash(paste:*)"
     ],
     "deny": [],
     "ask": []

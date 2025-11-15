@@ -1,16 +1,22 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: network
-  namespace: flux-system
+  name: grafana
+  namespace: monitoring
 spec:
   interval: 10m
   serviceAccountName: kustomize-controller
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./clusters/svm-k8s-lab/network
+  path: ./clusters/svm-k8s-lab/monitoring/grafana
   prune: true
   wait: false
   dependsOn:
     - name: namespaces
+    - name: cnpg-grafana
+  targetNamespace: monitoring
+  postBuild:
+    substitute:
+      namespace_name: monitoring
+1
